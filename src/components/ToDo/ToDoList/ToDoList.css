@@ -1,0 +1,7 @@
+.completed {
+    border: 1px solid green;
+    text-decoration: line-through;
+}
+.pending {
+    border: 1px solid red;
+}
