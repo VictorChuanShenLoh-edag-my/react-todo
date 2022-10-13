@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
 import {v4 as uuidv4} from 'uuid';
-import { Todo } from "../ToDo.model";
-
 enum ButtonText {
     ADD = "ADD",
     SAVE = "SAVE"
@@ -11,7 +9,7 @@ const NewToDo = (props: any) => {
   const [newInput, setNewInput] = useState("");
   const [buttonTxt, setButtonTxt] = useState(ButtonText.ADD);
 
-  const onSubmitClick = (event: any) => {
+  const onSubmitHandler = (event: any) => {
     event.preventDefault();
     console.log(newInput);
     if (buttonTxt === ButtonText.ADD) {
@@ -22,11 +20,13 @@ const NewToDo = (props: any) => {
         setButtonTxt(ButtonText.ADD);
     }
     setNewInput("");
-    // return {id: 99, title: newInput, completed: false };
   };
 
   useEffect(() => {
-    setNewInput(props.editTodo?.title);
+    if (props.editTodo?.title) {
+      setNewInput(props.editTodo?.title);
+    }
+    
     if ( buttonTxt === ButtonText.ADD && props.editTodo) {
         setButtonTxt(ButtonText.SAVE);
     }
@@ -39,7 +39,7 @@ const NewToDo = (props: any) => {
         value={newInput}
         onChange={(e) => setNewInput(e.target.value)}
       ></input>
-      <button onClick={onSubmitClick}>{buttonTxt}</button>
+      <button onClick={onSubmitHandler}>{buttonTxt}</button>
     </Fragment>
   );
 };

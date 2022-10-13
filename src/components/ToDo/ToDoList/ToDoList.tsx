@@ -3,65 +3,35 @@ import "./ToDoList.css";
 import NewToDo from "../NewToDo/NewToDo";
 import { Todo } from "../ToDo.model";
 
-const toDoData: Todo[] = [
-  { id: "asd123", title: "Cook Lunch", completed: false },
-  { id: "asd222", title: "Do House Chores", completed: false },
-];
 const ToDoList = () => {
-  const [ToDoList, setToDoList] = useState<Todo[]>([]);
+  const [ToDoList, setToDoList] = useState<Map<string, Todo>>(new Map());
   const [editTodo, setEditTodo] = useState<Todo>();
   const [isEdit, setIsEdit] = useState(false);
 
-  const findListIndex = (data: Todo): number => {
-    return ToDoList.findIndex((x) => {
-      return x.id === data.id;
-    });
-  };
-
   const toSetToDoList = (data: Todo) => {
-    let newList;
-    const index = findListIndex(data);
-    if (index !== -1) {
-      newList = [...ToDoList];
-      newList[index] = data;
-
-      setToDoList(newList);
-    } else {
-      setToDoList([...ToDoList, data]);
-    }
+    setToDoList(new Map(ToDoList.set(data.id, data)));
     setIsEdit(false);
   };
 
   const toMarkComplete = (id: string) => {
-    let newList;
-    const index = ToDoList.findIndex((x) => {
-      return x.id === id;
-    });
-    if (index !== -1) {
-      newList = [...ToDoList];
-      newList[index].completed = true;
-
-      setToDoList(newList);
+    let todo = ToDoList.get(id);
+    if (todo) {
+      todo.completed = true;
     }
-  };
-
-  const removeObjectWithId = (arr: Todo[], id: string) => {
-    arr = arr.filter((x) => x.id !== id);
-    return arr;
   };
 
   const onDeleteTodo = (id: string) => {
     toMarkComplete(id);
-    //setTimeout(() => {
-      setToDoList(removeObjectWithId(ToDoList, id));
-    //}, 2000);
+
+    ToDoList.delete(id);
+    setToDoList(new Map(ToDoList));
   };
 
   return (
     <Fragment>
       <NewToDo onAddClicked={toSetToDoList} editTodo={editTodo} />
-      <h1>{ToDoList.length} Todos</h1>
-      {ToDoList.map((item) => (
+      <h1>{ToDoList?.size} Todos</h1>
+      {Array.from(ToDoList?.values()).map((item) => (
         <div
           key={item.id}
           className={`${item.completed ? "completed" : "pending"}`}
