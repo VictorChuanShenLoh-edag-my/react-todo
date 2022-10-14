@@ -27,30 +27,32 @@ const ToDoList = () => {
     setToDoList(new Map(ToDoList));
   };
 
+  const toDoListContent = Array.from(ToDoList?.values()).map((item) => (
+    <div
+      key={item.id}
+      className={`${item.completed ? "completed" : "pending"}`}
+    >
+      {item.title}
+      <button onClick={() => onDeleteTodo(item.id)} disabled={isEdit}>
+        Complete
+      </button>
+      <button
+        onClick={() => {
+          setEditTodo(item);
+          setIsEdit(true);
+        }}
+        disabled={isEdit}
+      >
+        Edit
+      </button>
+    </div>
+  ));
+
   return (
     <Fragment>
       <NewToDo onAddClicked={toSetToDoList} editTodo={editTodo} />
       <h1>{ToDoList?.size} Todos</h1>
-      {Array.from(ToDoList?.values()).map((item) => (
-        <div
-          key={item.id}
-          className={`${item.completed ? "completed" : "pending"}`}
-        >
-          {item.title}
-          <button onClick={() => onDeleteTodo(item.id)} disabled={isEdit}>
-            Complete
-          </button>
-          <button
-            onClick={() => {
-              setEditTodo(item);
-              setIsEdit(true);
-            }}
-            disabled={isEdit}
-          >
-            Edit
-          </button>
-        </div>
-      ))}
+      {toDoListContent}
     </Fragment>
   );
 };
