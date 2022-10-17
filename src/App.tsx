@@ -6,8 +6,6 @@ import TryUseEffect from './components/TryUseEffect';
 function App() {
   return (
     <div className="App">
-      {/* <TryUseEffect></TryUseEffect> */}
-      {/* <DoCount></DoCount> */}
       <ToDoList></ToDoList>
     </div>
   );

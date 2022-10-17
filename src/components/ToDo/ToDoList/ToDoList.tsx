@@ -2,9 +2,12 @@ import React, { Fragment, useState } from "react";
 import "./ToDoList.css";
 import NewToDo from "../NewToDo/NewToDo";
 import { Todo } from "../ToDo.model";
+import { SearchToDo } from "../SearchToDo/SearchToDo";
 
 const ToDoList = () => {
   const [ToDoList, setToDoList] = useState<Map<string, Todo>>(new Map());
+  let [filteredToDoList, setFilteredToDoList] = useState<Map<string, Todo>>(new Map());
+  const [filterText, setFilterText] = useState("");
   const [editTodo, setEditTodo] = useState<Todo>();
   const [isEdit, setIsEdit] = useState(false);
 
@@ -27,7 +30,24 @@ const ToDoList = () => {
     setToDoList(new Map(ToDoList));
   };
 
-  const toDoListContent = Array.from(ToDoList?.values()).map((item) => (
+  const filterToDoHandler = (arg: string) => {
+    setFilterText(() => arg);
+  };
+
+  if (filterText === "") {
+    filteredToDoList = ToDoList;
+  } else {
+    filteredToDoList = new Map(
+      Array.from(ToDoList).filter(([key, value]) => {
+        if (value.title.includes(filterText)) {
+          return true;
+        }
+        return false;
+      })
+    );
+  }
+
+  const toDoListContent = Array.from(filteredToDoList?.values()).map((item) => (
     <div
       key={item.id}
       className={`${item.completed ? "completed" : "pending"}`}
@@ -51,7 +71,8 @@ const ToDoList = () => {
   return (
     <Fragment>
       <NewToDo onAddClicked={toSetToDoList} editTodo={editTodo} />
-      <h1>{ToDoList?.size} Todos</h1>
+      <SearchToDo filterToDo={filterToDoHandler}></SearchToDo>
+      <h1>{filteredToDoList?.size} Todos</h1>
       {toDoListContent}
     </Fragment>
   );
