@@ -3,6 +3,7 @@ import "./ToDoList.css";
 import NewToDo from "../NewToDo/NewToDo";
 import { Todo } from "../ToDo.model";
 import { SearchToDo } from "../SearchToDo/SearchToDo";
+import { ToDo } from "../ToDo/ToDo";
 
 const ToDoList = () => {
   const [ToDoList, setToDoList] = useState<Map<string, Todo>>(new Map());
@@ -29,7 +30,13 @@ const ToDoList = () => {
     ToDoList.delete(id);
     setToDoList(new Map(ToDoList));
   };
-
+  const onEditClickHandler = (item: Todo) => {
+    setEditTodo(item);
+    setIsEdit(true);
+  }
+  const onDeleteClickHandler = (id: string) => {
+    onDeleteTodo(id);
+  }
   const filterToDoHandler = (arg: string) => {
     setFilterText(() => arg);
   };
@@ -48,33 +55,16 @@ const ToDoList = () => {
   }
 
   const toDoListContent = Array.from(filteredToDoList?.values()).map((item) => (
-    <div
-      key={item.id}
-      className={`${item.completed ? "completed" : "pending"}`}
-    >
-      {item.title}
-      <button onClick={() => onDeleteTodo(item.id)} disabled={isEdit}>
-        Complete
-      </button>
-      <button
-        onClick={() => {
-          setEditTodo(item);
-          setIsEdit(true);
-        }}
-        disabled={isEdit}
-      >
-        Edit
-      </button>
-    </div>
+    <ToDo key={item.id} item={item} isEdit={isEdit} onEditClick={onEditClickHandler} onDeleteClick={onDeleteClickHandler}/>
   ));
 
   return (
-    <Fragment>
+    <div className="todo-body">
       <NewToDo onAddClicked={toSetToDoList} editTodo={editTodo} />
       <SearchToDo filterToDo={filterToDoHandler}></SearchToDo>
       <h1>{filteredToDoList?.size} Todos</h1>
       {toDoListContent}
-    </Fragment>
+    </div>
   );
 };
 export default ToDoList;

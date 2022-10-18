@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { Input  } from '@chakra-ui/react';
 
 export const SearchToDo = (props: any) => {
     const [searchText, setSearchText] = useState("");
@@ -11,8 +12,8 @@ export const SearchToDo = (props: any) => {
 
   return (
     <div>
-        <input type='search' placeholder='Search' onChange={onChangeHandler}>
-        </input>
+        <Input type='search' placeholder='Search' onChange={onChangeHandler}>
+        </Input>
 
     </div>
   )

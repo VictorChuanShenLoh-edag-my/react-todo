@@ -1,12 +1,13 @@
-import './App.css';
-import DoCount from './components/DoCount';
-import ToDoList from './components/ToDo/ToDoList/ToDoList';
-import TryUseEffect from './components/TryUseEffect';
+import { ChakraProvider } from "@chakra-ui/react";
+import "./App.css";
+import ToDoList from "./components/ToDo/ToDoList/ToDoList";
 
 function App() {
   return (
     <div className="App">
-      <ToDoList></ToDoList>
+      <ChakraProvider>
+        <ToDoList></ToDoList>
+      </ChakraProvider>
     </div>
   );
 }

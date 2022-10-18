@@ -1,4 +1,6 @@
+import './NewToDo.css';
 import React, { Fragment, useEffect, useState } from "react";
+import { Button, Input  } from '@chakra-ui/react'
 import {v4 as uuidv4} from 'uuid';
 enum ButtonText {
     ADD = "ADD",
@@ -33,14 +35,14 @@ const NewToDo = (props: any) => {
   }, [props.editTodo]);
 
   return (
-    <Fragment>
-      <input
+    <div className="new-todo">
+      <Input 
         type={"text"}
         value={newInput}
         onChange={(e) => setNewInput(e.target.value)}
-      ></input>
-      <button onClick={onSubmitHandler}>{buttonTxt}</button>
-    </Fragment>
+      ></Input>
+      <Button onClick={onSubmitHandler}>{buttonTxt}</Button>
+    </div>
   );
 };
 
