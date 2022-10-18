@@ -2,12 +2,18 @@ import './NewToDo.css';
 import React, { Fragment, useEffect, useState } from "react";
 import { Button, Input  } from '@chakra-ui/react'
 import {v4 as uuidv4} from 'uuid';
+import { Todo } from '../ToDo.model';
+
+interface Props {
+  onAddClicked: (todo: Todo) => void,
+  editTodo: Todo
+}
 enum ButtonText {
     ADD = "ADD",
     SAVE = "SAVE"
 }
 
-const NewToDo = (props: any) => {
+const NewToDo = (props: Props) => {
   const [newInput, setNewInput] = useState("");
   const [buttonTxt, setButtonTxt] = useState(ButtonText.ADD);
 

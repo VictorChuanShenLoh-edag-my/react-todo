@@ -2,19 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Todo } from "../ToDo.model";
 import { Button, ScaleFade, useDisclosure } from '@chakra-ui/react'
 
-export const ToDo = (props: any) => {
+interface Props {
+  item: Todo,
+  isEdit: boolean,
+  onEditClick: (todo:Todo) => void,
+  onDeleteClick: (id: string) => void
+}
+
+export const ToDo = (props: Props) => {
   const [firstRender, setFirstRender]=useState(true);
-const { isOpen, onToggle, onOpen } = useDisclosure({defaultIsOpen: true});
+  const { isOpen, onToggle, onOpen } = useDisclosure({defaultIsOpen: true});
 
   const onEditClickHandler = (item: Todo) => {
     props.onEditClick(item)
   };
   const onDeleteClickHandler = async () => {
-
     onToggle();
-    // setFirstRender(false);
-    // props.onDeleteClick(id);
-
   }
 
   useEffect(() => {

@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Input  } from '@chakra-ui/react';
 
-export const SearchToDo = (props: any) => {
+interface Props {
+  filterToDo: (value:string) => void
+}
+
+export const SearchToDo = (props: Props) => {
     const [searchText, setSearchText] = useState("");
     
     const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

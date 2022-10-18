@@ -9,7 +9,7 @@ const ToDoList = () => {
   const [ToDoList, setToDoList] = useState<Map<string, Todo>>(new Map());
   let [filteredToDoList, setFilteredToDoList] = useState<Map<string, Todo>>(new Map());
   const [filterText, setFilterText] = useState("");
-  const [editTodo, setEditTodo] = useState<Todo>();
+  const [editTodo, setEditTodo] = useState<Todo>(new Todo());
   const [isEdit, setIsEdit] = useState(false);
 
   const toSetToDoList = (data: Todo) => {
